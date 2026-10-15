@@ -1,0 +1,20 @@
+services:
+  api:
+    build:
+      context: ./api
+    image: iris-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./model:/model:ro
+    depends_on:
+      - base
+
+  base:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
